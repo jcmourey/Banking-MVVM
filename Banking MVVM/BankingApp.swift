@@ -11,8 +11,6 @@ import SwiftUI
 
 @main
 struct BankingApp: App {
-    let storageController = StorageController()
-    
     var body: some Scene {
         WindowGroup {
             AccountsView()
