@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TransactionsView: View {
     @State private var model: ViewModel
-	@State private var addingTransaction: Bool = false
+  	@State private var addingTransaction: Bool = false
     
     init(account: Account, accounts: [Account]) {
         let model = ViewModel(account: account, accounts: accounts)
