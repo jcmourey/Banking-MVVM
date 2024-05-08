@@ -17,7 +17,7 @@ struct TransactionsView: View {
     }
 	
 	var body: some View {
-        Content(account: $model.account, new: { addingTransaction = true })
+        Content(title: model.account.name, transactions: model.account.transactions, new: { addingTransaction = true })
 			.sheet(isPresented: $addingTransaction) {
 				NavigationStack {
                     New(account: model.account, add: model.addTransaction)
@@ -31,21 +31,22 @@ struct TransactionsView: View {
 // MARK: - Content
 extension TransactionsView {
 	struct Content: View {
-		@Binding var account: Account
+		let title: String
+        let transactions: [Transaction]
 		let new: () -> Void
 		
 		var body: some View {
 			VStack {
-                List(transactions) { transaction in
+                List(sortedTransactions) { transaction in
 					Row(transaction: transaction)
 				}
 				AddButton(title: "New Transaction", action: new)
 			}
-			.navigationBarTitle(account.name)
+			.navigationBarTitle(title)
 		}
-		
-		var transactions: [Transaction] {
-            account.transactions.sorted(using: KeyPathComparator(\.date, order: .reverse))
+
+		var sortedTransactions: [Transaction] {
+            transactions.sorted(using: KeyPathComparator(\.date, order: .reverse))
 		}
 	}
 }
