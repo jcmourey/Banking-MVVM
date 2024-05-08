@@ -5,26 +5,22 @@
 //  Created by Jean-Charles Mourey on 07/05/2024.
 //
 
-import Foundation
+import SwiftUI
 
 extension TransactionsView {
-    @Observable class ViewModel {
-        private(set) var account: Account
-        private var accounts: [Account]
+    @Observable final class ViewModel {
+        var account: Account
+        private let update: (Account) -> Void
         
-        private let storageController = StorageController()
-
-        init(account: Account, accounts: [Account]) {
+        init(account: Account, update: @escaping (Account) -> Void) {
             self.account = account
-            self.accounts = accounts
+            self.update = update
         }
         
         func addTransaction(withAmount amount: Int, beneficiary: String) {
-            guard let index = accounts.firstIndex(where: { $0.id == account.id }) else { return }
             let transaction = Transaction(amount: amount, beneficiary: beneficiary, date: .now)
             account.add(transaction)
-            accounts[index] = account
-            storageController.save(accounts)
+            update(account)
         }
     }
 }

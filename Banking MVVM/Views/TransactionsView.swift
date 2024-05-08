@@ -12,17 +12,18 @@ struct TransactionsView: View {
     @State private var model: ViewModel
   	@State private var addingTransaction: Bool = false
     
-    init(account: Account, accounts: [Account]) {
-        let model = ViewModel(account: account, accounts: accounts)
-        self._model = State(initialValue: model)
+    init(account: Account, update: @escaping (Account) -> Void) {
+        model = ViewModel(account: account, update: update)
     }
 	
 	var body: some View {
-        Content(account: model.account, newTransaction: { addingTransaction = true })
+        Content(account: $model.account, new: { addingTransaction = true })
 			.sheet(isPresented: $addingTransaction) {
 				NavigationStack {
-                    NewTransactionView(account: model.account, add: model.addTransaction)
+                    New(account: model.account, add: model.addTransaction)
 				}
+                .presentationDetents([.fraction(0.3)]) 
+                .interactiveDismissDisabled()
 		}
 	}
 }
@@ -30,15 +31,15 @@ struct TransactionsView: View {
 // MARK: - Content
 extension TransactionsView {
 	struct Content: View {
-		let account: Account
-		let newTransaction: () -> Void
+		@Binding var account: Account
+		let new: () -> Void
 		
 		var body: some View {
 			VStack {
                 List(transactions) { transaction in
 					Row(transaction: transaction)
 				}
-				AddButton(title: "New Transaction", action: newTransaction)
+				AddButton(title: "New Transaction", action: new)
 			}
 			.navigationBarTitle(account.name)
 		}
@@ -73,6 +74,7 @@ extension TransactionsView.Content {
 
 #Preview {
     NavigationStack {
-        TransactionsView.Content(account: .preview, newTransaction: {})
+        //TransactionsView.Content(account: .preview, new: {})
+        TransactionsView(account: .preview, update: {_ in})
     }
 }

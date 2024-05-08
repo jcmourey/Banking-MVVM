@@ -11,7 +11,7 @@ import Foundation
 extension Int {
 	var currencyFormat: String {
         (Double(self) / 100)
-            .formatted(.currency(code: "USD"))
+            .formatted(.currency())
 	}
 }
 

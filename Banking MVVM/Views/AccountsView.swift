@@ -13,12 +13,19 @@ struct AccountsView: View {
     
     var body: some View {
         NavigationStack {
-            Content(accounts: model.accounts, move: model.move, newAccount: { addingAccount = true })
+            Content(
+                accounts: $model.accounts,
+                move: model.move,
+                new: { addingAccount = true },
+                update: model.update(account:)
+            )
         }
         .sheet(isPresented: $addingAccount) {
             NavigationStack {
-                NewAccountView(add: model.addAccount)
+                New(add: model.addAccount)
             }
+            .presentationDetents([.fraction(0.5)])
+            .interactiveDismissDisabled()
         }
     }
 }
@@ -26,9 +33,10 @@ struct AccountsView: View {
 // MARK: - Content
 extension AccountsView {
     struct Content: View {
-        let accounts: [Account]
+        @Binding var accounts: [Account]
         let move: (IndexSet, Int) -> Void
-        let newAccount: () -> Void
+        let new: () -> Void
+        let update: (Account) -> Void
         
         var body: some View {
             VStack {
@@ -40,12 +48,12 @@ extension AccountsView {
                     }
                     .onMove(perform: move)
                 }
-                AddButton(title: "New Account", action: newAccount)
+                AddButton(title: "New Account", action: new)
             }
             .navigationBarTitle("Accounts")
             .navigationBarItems(trailing: EditButton())
             .navigationDestination(for: Account.self) { account in
-                TransactionsView(account: account, accounts: accounts)
+                TransactionsView(account: account, update: update)
             }
         }
        
@@ -80,6 +88,6 @@ extension AccountsView.Content {
 
 #Preview {
     NavigationStack {
-        AccountsView.Content(accounts: .preview, move: {_,_ in }, newAccount: {})
+        AccountsView.Content(accounts: .constant(.preview), move: {_,_ in}, new: {}, update: {_ in})
     }
 }

@@ -8,37 +8,38 @@
 
 import SwiftUI
 
-struct NewTransactionView: View {
-	let account: Account
-    let add: (Int, String) -> Void
-
-    @Environment(\.dismiss) var dismiss
-	@State private var amount: String = ""
-	@State private var beneficiary: String = ""
-	
-	var body: some View {
-        Content(amount: $amount, beneficiary: $beneficiary, cancel: { dismiss() }, send: send)
-	}
-	
-	func send() {
-        let amount = (Int(amount) ?? 0) * 100
-        add(amount, beneficiary)
-		dismiss()
-	}
+extension TransactionsView {
+    struct New: View {
+        let account: Account
+        let add: (Int, String) -> Void
+        
+        @Environment(\.dismiss) var dismiss
+        @State private var amount: Double?
+        @State private var beneficiary: String = ""
+        
+        var body: some View {
+            Content(amount: $amount, beneficiary: $beneficiary, cancel: dismiss.callAsFunction, send: send)
+        }
+        
+        func send() {
+            let amount = Int((amount ?? 0) * 100)
+            add(amount, beneficiary)
+            dismiss()
+        }
+    }
 }
 
 // MARK: - Content
-
-extension NewTransactionView {
+extension TransactionsView.New {
 	struct Content: View {
-		@Binding var amount: String
+		@Binding var amount: Double?
 		@Binding var beneficiary: String
 		
 		let cancel: () -> Void
 		let send: () -> Void
 		
 		var body: some View {
-			List {
+			Form {
 				Amount(amount: $amount)
 				TextField("Beneficiary name", text: $beneficiary)
 			}
@@ -61,18 +62,18 @@ extension NewTransactionView {
 	}
 }
 
-extension NewTransactionView.Content {
+extension TransactionsView.New.Content {
 	struct Amount: View {
-		@Binding var amount: String
+		@Binding var amount: Double?
 		
 		var body: some View {
 			VStack(alignment: .trailing) {
 				Text("Amount")
 					.font(.callout)
 					.foregroundColor(.secondary)
-				TextField(0.currencyFormat, text: $amount)
+                TextField(0.currencyFormat, value: $amount, format: .currency())
 					.multilineTextAlignment(.trailing)
-                    .keyboardType(.asciiCapableNumberPad)
+                    .keyboardType(.decimalPad)
 					.font(Font.largeTitle.bold())
 			}
 			.padding()
@@ -82,6 +83,6 @@ extension NewTransactionView.Content {
 
 #Preview {
     NavigationStack {
-        NewTransactionView.Content(amount: .constant(""), beneficiary: .constant(""), cancel: {}, send: {})
+        TransactionsView.New.Content(amount: .constant(0), beneficiary: .constant(""), cancel: {}, send: {})
     }
 }

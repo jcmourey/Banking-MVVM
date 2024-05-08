@@ -8,7 +8,7 @@
 import Foundation
 
 extension AccountsView {
-    @Observable class ViewModel {
+    @Observable final class ViewModel {
         var accounts: [Account]
         
         private let storageController = StorageController()
@@ -23,6 +23,12 @@ extension AccountsView {
             storageController.save(accounts)
         }
         
+        func update(account: Account) {
+            guard let index = accounts.firstIndex(where: { $0.id == account.id }) else { return }
+            accounts[index] = account
+            storageController.save(accounts)
+        }
+    
         func move(fromOffsets source: IndexSet, toOffset destination: Int) {
             accounts.move(fromOffsets: source, toOffset: destination)
         }
@@ -31,16 +37,16 @@ extension AccountsView {
 
 extension String {
     static func generateIban() -> String {
-        func randomString(lenght: Int, from characters: String) -> String {
-            String((0 ..< lenght).map { _ in characters.randomElement()! })
+        func randomString(length: Int, from characters: String) -> String {
+            String((0 ..< length).map { _ in characters.randomElement()! })
         }
         
         let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         let digits = "0123456789"
-        return randomString(lenght: 2, from: letters)
-            + randomString(lenght: 2, from: digits)
-            + randomString(lenght: 4, from: letters)
-            + randomString(lenght: 12, from: digits)
+        return randomString(length: 2, from: letters)
+            + randomString(length: 2, from: digits)
+            + randomString(length: 4, from: letters)
+            + randomString(length: 12, from: digits)
     }
 }
 

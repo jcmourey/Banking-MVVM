@@ -13,17 +13,16 @@ struct AddButton: View {
 	let action: () -> Void
 	
 	var body: some View {
-		HStack {
-			Spacer()
-			Button(action: action) {
-				HStack {
-					Image(systemName: "plus.circle.fill")
-					Text(title)
-				}
-				.font(.headline)
-			}
-			.padding(.trailing, 20.0)
-		}
+        Button(action: action) {
+            HStack {
+                Image(systemName: "plus.circle.fill")
+                Text(title)
+            }
+            .font(.headline)
+        }
+        .padding(.trailing, 20)
+        .padding(.top, 10)
+        .frame(maxWidth: .infinity, alignment: .trailing)
 	}
 }
 
