@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct NewAccountView: View {
+    let add: (String, Account.Kind) -> Void
+
     @Environment(\.dismiss) var dismiss
     @State private var name: String = ""
 	@State private var kind: Account.Kind = .checking
-    
-    let add: (String, Account.Kind) -> Void
 	
 	var body: some View {
         Content(name: $name, kind: $kind, create: create, cancel: { dismiss() })
@@ -35,16 +35,15 @@ extension NewAccountView {
 		let cancel: () -> Void
 
 		var body: some View {
-			List {
+			Form {
 				TextField("Account name", text: $name)
 				Picker("Kind", selection: $kind) {
 					ForEach(Account.Kind.allCases, id: \.self) { kind in
 						Text(kind.rawValue).tag(kind)
 					}
-				}
-				Spacer()
+                }
+                .pickerStyle(.inline)
 			}
-			.padding(.top)
 			.navigationBarTitle("New Account")
 			.navigationBarItems(leading: cancelButton, trailing: createButton)
 		}
@@ -64,10 +63,10 @@ extension NewAccountView {
 	}
 }
 
-struct NewAccountView_Previews: PreviewProvider {
-	static var previews: some View {
-		NavigationView {
-			NewAccountView.Content(name: .constant(""), kind: .constant(.checking), create: {}, cancel: {})
-		}
-	}
+#Preview {
+    NavigationStack {
+        NewAccountView(add: { _,_ in })
+
+        //NewAccountView.Content(name: .constant(""), kind: .constant(.checking), create: {}, cancel: {})
+    }
 }
