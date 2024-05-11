@@ -18,5 +18,4 @@ extension [Account] {
 
 extension Transaction {
     static let preview = Transaction(amount: 123456, beneficiary: "Salary", date: .now)
-
 }

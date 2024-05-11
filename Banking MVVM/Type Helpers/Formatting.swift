@@ -26,7 +26,7 @@ extension String {
         inserted(" ", atEach: 4)
 	}
     
-    func inserted(_ newElement: Character, atEach increment:Int)->String {
+    func inserted(_ newElement: Character, atEach increment: Int) -> String {
         var newStr = self
 
         for indx in stride(from: increment, to: newStr.count, by: increment).reversed() {

@@ -12,7 +12,6 @@ import Foundation
 extension Double {
     init?(_ string: String) {
         let formatter = NumberFormatter()
-  //      formatter.locale = Locale.current
         formatter.numberStyle = .decimal
 
         guard let number = formatter.number(from: string) else { return nil }

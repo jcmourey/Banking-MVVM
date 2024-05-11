@@ -75,7 +75,6 @@ extension TransactionsView.Content {
 
 #Preview {
     NavigationStack {
-        //TransactionsView.Content(account: .preview, new: {})
         TransactionsView(account: .preview, update: {_ in})
     }
 }
