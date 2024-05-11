@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Algorithms
 
 extension Int {
 	var currencyFormat: String {
@@ -23,17 +24,7 @@ extension Date {
 
 extension String {
 	var ibanFormat: String {
-        inserted(" ", atEach: 4)
+        chunks(ofCount: 4)
+            .joined(separator: " ")
 	}
-    
-    func inserted(_ newElement: Character, atEach increment: Int) -> String {
-        var newStr = self
-
-        for indx in stride(from: increment, to: newStr.count, by: increment).reversed() {
-            let index = String.Index(utf16Offset: indx, in: newStr)
-            newStr.insert(newElement, at: index)
-        }
-
-        return newStr
-    }
 }

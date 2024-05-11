@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Transaction: Identifiable, Codable {
+struct Transaction: Identifiable, Codable, Hashable {
     let id: UUID
 	let amount: Int
 	let beneficiary: String

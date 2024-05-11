@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC2B9F8D2BEFBDAA000F059D /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = DC2B9F8C2BEFBDAA000F059D /* Algorithms */; };
 		DCBAB54F2BEAA72900311C1B /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBAB54E2BEAA72900311C1B /* AccountsView.swift */; };
 		DCBAB5512BEAA72B00311C1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCBAB5502BEAA72B00311C1B /* Assets.xcassets */; };
 		DCBAB5552BEAA72B00311C1B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCBAB5542BEAA72B00311C1B /* Preview Assets.xcassets */; };
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC2B9F8D2BEFBDAA000F059D /* Algorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +155,9 @@
 			dependencies = (
 			);
 			name = "Banking MVVM";
+			packageProductDependencies = (
+				DC2B9F8C2BEFBDAA000F059D /* Algorithms */,
+			);
 			productName = "Banking MVVM";
 			productReference = DCBAB5492BEAA72900311C1B /* Banking MVVM.app */;
 			productType = "com.apple.product-type.application";
@@ -181,6 +186,9 @@
 				Base,
 			);
 			mainGroup = DCBAB5402BEAA72900311C1B;
+			packageReferences = (
+				DC2B9F8B2BEFBDAA000F059D /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+			);
 			productRefGroup = DCBAB54A2BEAA72900311C1B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -439,6 +447,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DC2B9F8B2BEFBDAA000F059D /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DC2B9F8C2BEFBDAA000F059D /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC2B9F8B2BEFBDAA000F059D /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DCBAB5412BEAA72900311C1B /* Project object */;
 }

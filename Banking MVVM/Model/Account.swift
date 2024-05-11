@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Account: Codable {
+struct Account: Codable, Hashable {
 	let name: String
 	let iban: String
 	let kind: Kind
@@ -30,20 +30,6 @@ struct Account: Codable {
 
 extension Account: Identifiable {
     var id: String { iban }
-}
-
-extension Account: Hashable {
-    static func == (lhs: Account, rhs: Account) -> Bool {
-        lhs.name == rhs.name &&
-        lhs.iban == rhs.iban &&
-        lhs.kind == rhs.kind
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
-        hasher.combine(iban)
-        hasher.combine(kind)
-    }
 }
 
 extension Account {
