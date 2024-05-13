@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import Combine
 
 extension AccountsView {
     @Observable final class ViewModel {
-        var accounts: [Account]
+        private(set) var accounts: [Account]
         
         private let storageController = StorageController()
         

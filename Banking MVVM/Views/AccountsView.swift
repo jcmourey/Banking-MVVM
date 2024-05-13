@@ -14,7 +14,7 @@ struct AccountsView: View {
     var body: some View {
         NavigationStack {
             Content(
-                accounts: $model.accounts,
+                accounts: model.accounts,
                 move: model.move,
                 new: { addingAccount = true },
                 update: model.update(account:)
@@ -33,7 +33,7 @@ struct AccountsView: View {
 // MARK: - Content
 extension AccountsView {
     struct Content: View {
-        @Binding var accounts: [Account]
+        let accounts: [Account]
         let move: (IndexSet, Int) -> Void
         let new: () -> Void
         let update: (Account) -> Void
@@ -88,6 +88,6 @@ extension AccountsView.Content {
 
 #Preview {
     NavigationStack {
-        AccountsView.Content(accounts: .constant(.preview), move: {_,_ in}, new: {}, update: {_ in})
+        AccountsView.Content(accounts: .preview, move: {_,_ in}, new: {}, update: {_ in})
     }
 }
